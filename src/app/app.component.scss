@@ -12,7 +12,7 @@
 .header {
     height: 64px;
     background-color: aliceblue;
-    display: flex; 
+    display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0 16px;
@@ -21,24 +21,34 @@
 
 .main {
     flex-grow: 1;
-
-    display: flex; 
-    flex-direction: row;
+    // width: 100%;
     padding: 0 16px;
+}
 
-    .category {
-        width: 500px;
-    }
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
 
-    .category-details {
-        // wi
-    }
+// background-color: teal;
+
+.category {
+    width: 500px;
+}
+
+.category-details {
+    // wi
+    width: 300px;
 }
 
 .bookmark-wrapper {
     border: 1px solid gray;
     padding: 10px;
     width: 100%;
+
+    max-height: 400px;
+    overflow: auto;
 
     // background-color: green;
 }
