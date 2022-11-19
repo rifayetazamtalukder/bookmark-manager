@@ -1,0 +1,26 @@
+.root {
+    // background-color: green;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.header {
+    height: 64px;
+    background-color: aliceblue;
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.main {
+    flex-grow: 1;
+
+    display: flex; 
+    flex-direction: row;
+    padding: 0 16px;
+}
