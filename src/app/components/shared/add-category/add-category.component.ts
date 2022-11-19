@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { MatDialogRef } from '@angular/material/dialog';
+
 import { CategoryService } from "../../../controllers/services/category/category.service";
 
 import { BookmarkService } from "../../../controllers/services/bookmark/bookmark.service";
@@ -33,7 +35,8 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
     private readonly _fb: FormBuilder,
     private readonly _categoryService: CategoryService,
     private readonly _bookmarkService: BookmarkService,
-    private readonly _snackbar: MatSnackBar
+    private readonly _snackbar: MatSnackBar,
+    private _dialogRef: MatDialogRef<AddCategoryComponent>
   ) {}
 
   ngOnInit(): void {
@@ -103,6 +106,7 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
       // console.log('Final _bookmark: ', _bookmark);
 
       this._bookmarkService.addBookmark(_bookmark);
+      this._dialogRef.close('bookmark_added');
     }
     else {
       this._snackbar.open('Please fill all the required fields', 'Close', {

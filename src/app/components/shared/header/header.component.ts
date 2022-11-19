@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { AddCategoryComponent } from '../add-category/add-category.component';
 
 @Component({
@@ -12,6 +14,7 @@ import { AddCategoryComponent } from '../add-category/add-category.component';
 export class HeaderComponent implements OnInit {
   constructor(
     private readonly _dialog: MatDialog,
+    private readonly _snackbar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -26,7 +29,14 @@ export class HeaderComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Bookmark form data: ${result}`);
+      // console.log(`Bookmark form data: ${result}`);
+      if(result === 'bookmark_added') {
+        this._snackbar.open('Bookamrk added successfully', 'Close', {
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            duration: 4000
+        });
+      }
     });
   }
 }
