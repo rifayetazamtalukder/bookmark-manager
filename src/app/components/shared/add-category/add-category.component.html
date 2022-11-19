@@ -1,1 +1,64 @@
-<p>add-category works!</p>
+<h2 mat-dialog-title>Add Bookmark</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="bookmarkForm" (ngSubmit)="handleAddBookmarkFormSubmit()" novalidate>
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" formControlName="title" required>
+
+        <mat-hint>Add the bookmark title</mat-hint>
+
+        <mat-hint align="end">
+            {{ title?.value.length || 0 }}/{{ titleMaxLength }}
+        </mat-hint>
+
+        <mat-error>
+            {{ getTitleErrorMessage() }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mt-3" appearance="outline">
+        <mat-label>URL</mat-label>
+        <input matInput type="text" formControlName="url" required>
+
+        <mat-hint>Add the bookmark url</mat-hint>
+
+        <mat-error>
+            {{ getUrlErrorMessage() }}
+        </mat-error>
+    </mat-form-field>
+
+    
+    <div class="form-wrapper">
+        <div class="grow-1">
+            <mat-form-field class="w-100 mt-3" appearance="outline">
+                <mat-label>Category</mat-label>
+
+                <mat-select formControlName="category">
+                    <mat-option value>Category</mat-option>
+                    <mat-option [value]="_category" *ngFor="let _category of categories">
+                        {{ _category }}
+                    </mat-option>
+                </mat-select>
+
+                <mat-hint>Click on (+) to add custom category</mat-hint>
+
+                <mat-error>
+                    {{ getCategoryErrorMessage() }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-add-btn">
+            <button type="button" mat-stroked-button color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="btn-container mt-4">
+        <button type="button" mat-button mat-dialog-close>Cancel</button>
+        <button type="submit" mat-button cdkFocusInitial>Save</button>
+    </div>
+  </form>
+</mat-dialog-content>
