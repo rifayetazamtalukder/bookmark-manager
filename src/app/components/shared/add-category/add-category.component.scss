@@ -9,13 +9,13 @@
 .btn-container {
     display: flex;
     gap: 20px;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .form-wrapper {
     display: flex;
     gap: 20px;
-    justify-content: end;
+    justify-content: flex-end;
 
     .grow-1 {
         flex-grow: 1;
