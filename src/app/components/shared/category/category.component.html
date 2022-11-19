@@ -1,1 +1,12 @@
-<p>category works!</p>
+<div class="my-3 category-container" *ngIf="bookmark">
+    <div>
+        <a [href]="bookmark.url" class="link" target="_blank">
+        {{ bookmark.title }}
+        </a>
+    </div>
+
+    <div>
+        <button type="button" mat-stroked-button (click)="handleClick()">Details</button>
+    </div>
+
+</div>

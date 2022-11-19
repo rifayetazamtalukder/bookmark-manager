@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   title = 'bookmark-manager';
 
   public bookamrks: BookMark[] = [];
+  public bookamrksGrouped: any = [];
 
   constructor(
     private readonly _bookmarkService: BookmarkService
@@ -22,9 +23,28 @@ export class AppComponent implements OnInit {
 
     this._bookmarkService.bookmarks$
       .subscribe((_bookmarks: BookMark[]) => {
-      this.bookamrks = _bookmarks;
+        const groupedBookmark = 
+        _bookmarks.reduce((r: any, a: any) => {
+          r[a.category] = r[a.category] || [];
+          r[a.category].push(a);
+          return r;
+        }, Object.create(null));
+        
+        // for(const category of groupedBookmark) {
+          //   console.log(category);
+          // }
+        const data = Object.entries(groupedBookmark);
+        // console.log(data);
 
-      console.log('Bookmarks: ', this.bookamrks);
+        // for(const book of data) {
+        //   // console.log(book);
+
+        // }
+
+        this.bookamrksGrouped = data;
+
+        this.bookamrks = _bookmarks;
+        console.log('Bookmarks: ', this.bookamrks);
     });
   }
 }

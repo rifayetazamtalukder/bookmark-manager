@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { BookMark } from "../../interfaces/bookmark.interface";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +13,9 @@ export class BookmarkService {
   private _bookmarkSubject = new BehaviorSubject<BookMark[]>([]);
   public bookmarks$ = this._bookmarkSubject.asObservable();
 
+  public _singleBookmarkSubject = new BehaviorSubject<BookMark | null>(null);
+  public singleBookmarkSubject$ = this._singleBookmarkSubject.asObservable();
+  
   private readonly bookmarkKey = 'bookmarks';
 
   get bookMarks(): BookMark[] {
@@ -49,5 +53,9 @@ export class BookmarkService {
     }
 
     this._bookmarkSubject.next(_bookMarks);
+  }
+
+  details(bookMark: BookMark) {
+    this._singleBookmarkSubject.next(bookMark);
   }
 }

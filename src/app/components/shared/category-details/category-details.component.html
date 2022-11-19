@@ -1,1 +1,5 @@
-<p>category-details works!</p>
+<div *ngIf="bookmark">
+    <p>Title: {{ bookmark.title }}</p>
+    <p>URL: {{ bookmark.url }}</p>
+    <p>Category: {{ bookmark.category }}</p>
+</div>
