@@ -2,7 +2,7 @@
 
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="bookmarkForm" (ngSubmit)="handleAddBookmarkFormSubmit()" novalidate>
-    <mat-form-field class="w-100" appearance="outline">
+    <mat-form-field class="w-100 mt-3" appearance="outline">
         <mat-label>Title</mat-label>
         <input matInput type="text" formControlName="title" required>
 
@@ -41,7 +41,7 @@
                     </mat-option>
                 </mat-select>
 
-                <mat-hint>Click on (+) to add custom category</mat-hint>
+                <mat-hint *ngIf="!category?.disabled">Click on (+) to add custom category</mat-hint>
 
                 <mat-error>
                     {{ getCategoryErrorMessage() }}
@@ -50,11 +50,20 @@
         </div>
 
         <div class="form-add-btn">
-            <button type="button" mat-stroked-button color="primary">
+            <button type="button" mat-stroked-button color="primary" (click)="addCustomCategory()">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
     </div>
+
+    <mat-form-field class="w-100 mt-3" appearance="outline" *ngIf="category?.disabled">
+        <mat-label>New Category Name</mat-label>
+        <input matInput type="text" formControlName="customCategory" required>
+
+        <mat-error>
+            {{ getCustomCategoryErrorMessage() }}
+        </mat-error>
+    </mat-form-field>
 
     <div class="btn-container mt-4">
         <button type="button" mat-button mat-dialog-close>Cancel</button>

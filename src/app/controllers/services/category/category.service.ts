@@ -15,7 +15,7 @@ export class CategoryService {
     const categories = localStorage.getItem(LocalStorage.categories);
 
     if(!categories) {
-      return [];
+      return ['test category'];
     }
     
     return JSON.parse(categories);

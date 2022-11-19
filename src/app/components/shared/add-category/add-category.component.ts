@@ -6,6 +6,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CategoryService } from "../../../controllers/services/category/category.service";
 
+import { BookmarkService } from "../../../controllers/services/bookmark/bookmark.service";
+
+import { BookMark } from "../../../controllers/interfaces/bookmark.interface";
+
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
@@ -22,11 +26,13 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
   get title() { return this.bookmarkForm.get('title'); }
   get url() { return this.bookmarkForm.get('url'); }
   get category() { return this.bookmarkForm.get('category'); }
+  get customCategory() { return this.bookmarkForm.get('customCategory'); }
 
 
   constructor(
     private readonly _fb: FormBuilder,
     private readonly _categoryService: CategoryService,
+    private readonly _bookmarkService: BookmarkService,
     private readonly _snackbar: MatSnackBar
   ) {}
 
@@ -44,6 +50,9 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
       ]],
       category: ['', [
         Validators.required
+      ]],
+      customCategory: ['not-enabled', [
+        Validators.required
       ]]
     });
   }
@@ -53,9 +62,47 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
   }
 
   public handleAddBookmarkFormSubmit() {
-    // console.log('Form value: ', this.bookmarkForm.value);
     if(this.bookmarkForm.valid) {
+      console.log('Form value: ', {
+        bookmarkForm: this.bookmarkForm.value,
+        isCategoryDisabled: this.category?.disabled
+      });
 
+      // const _category = this.category?.disabled ? this.customCategory?.value : this.category?.value;
+
+      let _category = '';
+
+      if(this.category?.disabled) {
+        _category = this.customCategory?.value.trim();
+
+        if(this.categories.includes(_category)) {
+          this._snackbar.open('This category name is already exists', 'Close', {
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            duration: 4000
+          });
+
+          return;
+        }
+        else {
+          // Add the category
+          this._categoryService.addCategory(_category);
+        }
+
+      }
+      else {
+        _category = this.category?.value
+      }
+
+      const _bookmark: BookMark = {
+        title: this.title?.value,
+        url: this.url?.value,
+        category: _category
+      }
+
+      // console.log('Final _bookmark: ', _bookmark);
+
+      this._bookmarkService.addBookmark(_bookmark);
     }
     else {
       this._snackbar.open('Please fill all the required fields', 'Close', {
@@ -64,6 +111,17 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
         duration: 4000
       });
     }
+  }
+
+  public addCustomCategory() {
+    this.category?.disable();
+
+    this.bookmarkForm.patchValue({  
+      customCategory: '',
+      category: 'disabled'
+    });
+
+    this.bookmarkForm.updateValueAndValidity()
   }
 
   public getTitleErrorMessage(): string | undefined {
@@ -102,6 +160,19 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
     }
     else {
       return `Please enter a valid Category`;
+    }
+  }
+
+  public getCustomCategoryErrorMessage(): string | undefined {
+    if (this.customCategory?.valid) {
+      return;
+    }
+
+    if (this.customCategory?.hasError('required')) {
+      return `Category name is a required field`;
+    }
+    else {
+      return `Please enter a valid Category Name`;
     }
   }
 }
