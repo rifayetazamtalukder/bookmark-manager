@@ -27,6 +27,7 @@ export class BookmarkService {
     ]
 
     this._bookmarkSubject.next(_bookmarks);
+    this._saveBookMarkInLocalStorage(_bookmarks);
   }
 
   private _saveBookMarkInLocalStorage(bookmarks: BookMark[]): void {

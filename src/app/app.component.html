@@ -5,7 +5,10 @@
 
   <div class="main">
     <div>
-      <app-category></app-category>
+      <div *ngIf="bookamrks.length === 0">
+        <p>No Bookmarks found</p>
+      </div>
+      <app-category *ngFor="let bookmark of bookamrks"></app-category>
     </div>
     
     <div>
